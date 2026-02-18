@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<HwVisualConfigManager>
+	<HwVisualConfig Key="__HW_MAIN_PLC__" DeviceType="CP313" Top="20" Left="20"/>
+	<HwVisualConfig Key="_DriveMng_DC0611" Top="128.8" Left="20"/>
+	<HwVisualConfig Key="_DriveMng_DC0611_Axis1" Top="128.8" Left="20"/>
+	<HwVisualConfig Key="_DriveMng_DC1011" Top="128.8" Left="20"/>
+	<HwVisualConfig Key="_DriveMng_DC1011_Axis1" Top="128.8" Left="20"/>
+	<HwVisualConfig Key="CP313_IOs1" Top="128.8" Left="20"/>
+	<HwVisualConfig Key="DI2001" Top="128.8" Left="20"/>
+	<HwVisualConfig Key="SCP2111" Top="128.8" Left="20"/>
+	<HwVisualConfig Key="SDI1011" Top="128.8" Left="20"/>
+	<HwVisualConfig Key="STO0811" Top="128.8" Left="20"/>
+	<HwVisualConfig Key="TO1611" Top="128.8" Left="20"/>
+	<HwVisualConfig Key="VaranManager_11" Top="177" Left="20"/>
+</HwVisualConfigManager>

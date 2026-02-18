@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<Network Name="DemoNetwork" Revision="0.0">
+	<!-- List of Components in this network -->
+	<Components>
+		<Object
+			Name          = "DemoClass1"
+			GUID          = "{6D9592D7-742C-48AE-A761-11E5C4F93ECF}"
+			Class         = "DemoClass"
+			Position      = "(600,360)"
+			Visualized    = "false"
+			OPCUASettings = "true"
+			CyclicTime    = "1 ms">
+			<Channels>
+				<Server Name="ClassSvr"/>
+				<Server Name="sDemoServer">
+					<OPCSettings WriteProtected="false"/>
+				</Server>
+				<Client Name="cDemoClient" Value="0"/>
+			</Channels>
+		</Object>
+	</Components>
+	<Comments>
+	</Comments>
+	<!-- List of Connections in this network -->
+	<Connections>
+	</Connections>
+	<!-- Headerfiles -->
+	<Options>
+	</Options>
+</Network>
