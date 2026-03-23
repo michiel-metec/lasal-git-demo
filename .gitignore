@@ -29,6 +29,12 @@ Internal
 *.lcc
 *.lds
 
+# additional files and file types
+*.mme
+MaeExp.txt
+MaeExp.xml
+
+
 # SigCLib requires lba and lob files
 !cObjLib.lob
 !cObjLib.lba
