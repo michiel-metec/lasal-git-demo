@@ -3,8 +3,12 @@
 #RE_IN_DE
 #pragma define (store)
 #if _LSL_COMPILERVERSION >= 42
+_OpenSSL : CLASS;
 HwcLogging : CLASS;
+OPC_UA_Base : CLASS;
+OPC_UA_ModuleBase : CLASS;
 SigCLib : CLASS;
+StringInternal : CLASS;
 #endif
 #pragma InclDefBlk SdiasBase
 SdiasBase : CLASS_PUBLIC
@@ -280,6 +284,672 @@ MerkerEx : CLASS_PUBLIC
 	    GET_DATA_PTR,
 	    EXCHANGE_DATA_PTR,
 	    SAVE_DATA_TO_RAMEXFILE
+	  )$UINT;
+	END_TYPE
+END_CLASS;
+#pragma define (restore)
+#pragma InclDefBlk OPC_UA
+OPC_UA : CLASS_PUBLIC
+	TYPE
+#pragma pack(push, 1)
+	  int64 : STRUCT
+	    low : UDINT;
+	    high : UDINT;
+	  END_STRUCT;
+#pragma pack(pop)
+	  OPC_UA_SETPARAMETER :
+	  (
+	    OPC_UA_PAR_SET_DELAYTIME:=0,
+	    OPC_UA_PAR_SET_THREADPRIO,
+	    OPC_UA_PAR_SET_AUTOCERTIFNR,
+	    OPC_UA_PAR_SET_DEDICATED_MEMORY_ENABLED,
+	    OPC_UA_PAR_SET_TRACELEVEL_RESET_TIME
+	  )$UDINT;
+#pragma pack(push, 1)
+	  tOPCUA_LocalizedText : STRUCT
+	    Locale : ^CHAR;
+	    Text : ^CHAR;
+	  END_STRUCT;
+#pragma pack(pop)
+	  ptrLocalizedText : ^tOPCUA_LocalizedText;
+	  ptrOpcUa_LocalizedText : ^tOPCUA_LocalizedText;
+#pragma pack(push, 1)
+	  tOpcUa_PkiCertificateInfo : STRUCT
+	    sURI : ^CHAR;
+	    sIP : ^CHAR;
+	    sDNS : ^CHAR;
+	    sEMail : ^CHAR;
+	    validTime : UDINT;
+	  END_STRUCT;
+#pragma pack(pop)
+	  ptrOpcUa_PkiCertificateInfo : ^tOpcUa_PkiCertificateInfo;
+#pragma pack(push, 1)
+	  tOpcUa_PkiIdentity : STRUCT
+	    sOrganization : ^CHAR;
+	    sOrganizationUnit : ^CHAR;
+	    sLocality : ^CHAR;
+	    sState : ^CHAR;
+	    sCountry : ^CHAR;
+	    sCommonName : ^CHAR;
+	    sDomainComponent : ^CHAR;
+	  END_STRUCT;
+#pragma pack(pop)
+	  ptrOpcUa_PkiIdentity : ^tOpcUa_PkiIdentity;
+#pragma pack(push, 1)
+	  tOPCUA_String : STRUCT
+	    Text : ^CHAR;
+	  END_STRUCT;
+#pragma pack(pop)
+	  ptrOPCUA_String : ^tOPCUA_String;
+#pragma pack(push, 1)
+	  tOpcUa_Variant : STRUCT
+	    DataType : UDINT;
+	    ArrayType : OPCUA_ArrayType_Enum;
+	    ArraySize : DINT;
+	    Value : _PVOIDL;
+	  END_STRUCT;
+#pragma pack(pop)
+	  ptrOpcUa_Variant : ^tOpcUa_Variant;
+	  T_BITS : BDINT
+	  [
+	    1 Bit1,
+	    2 Bit2,
+	    3 Bit3,
+	    4 Bit4,
+	    5 Bit5,
+	    6 Bit6,
+	    7 Bit7,
+	    8 Bit8,
+	    9 Bit9,
+	    10 Bit10,
+	    11 Bit11,
+	    12 Bit12,
+	    13 Bit13,
+	    14 Bit14,
+	    15 Bit15,
+	    16 Bit16,
+	    17 Bit17,
+	    18 Bit18,
+	    19 Bit19,
+	    20 Bit20,
+	    21 Bit21,
+	    22 Bit22,
+	    23 Bit23,
+	    24 Bit24,
+	    25 Bit25,
+	    26 Bit26,
+	    27 Bit27,
+	    28 Bit28,
+	    29 Bit29,
+	    30 Bit30,
+	    31 Bit31,
+	    32 Bit32,
+	  ];
+	  t_e_OpcUa_BaseStatus :
+	  (
+	    BS_Registered,
+	    BS_Init,
+	    BS_Ready,
+	    BS_Invalid
+	  )$UDINT;
+	  t_e_OpcUa_DataChangeTrigger :
+	  (
+	    OpcUa_DataChangeTrigger_Status:=0,
+	    OpcUa_DataChangeTrigger_StatusValue:=1,
+	    OpcUa_DataChangeTrigger_StatusValueTimestamp:=2,
+	    _OpcUa_DataChangeTrigger_MaxEnumerationValue:=2147483647
+	  )$UDINT;
+	  t_e_OpcUa_ExtensionObjectEncoding :
+	  (
+	    EOE_None,
+	    EOE_Binary,
+	    EOE_Xml,
+	    EOE_EncodeableObject
+	  )$UDINT;
+	  t_e_OpcUa_NodeClass_Intern_c :
+	  (
+	    OpcUa_NodeClass_Unspecified,
+	    OpcUa_NodeClass_Object,
+	    OpcUa_NodeClass_Variable,
+	    OpcUa_NodeClass_Method,
+	    OpcUa_NodeClass_ObjectType,
+	    OpcUa_NodeClass_VariableType,
+	    OpcUa_NodeClass_ReferenceType,
+	    OpcUa_NodeClass_DataType,
+	    OpcUa_NodeClass_View,
+	    _OpcUa_NodeClass_MaxEnumerationValue
+	  )$UDINT;
+#pragma pack(push, 1)
+	  t_OPCUA_ByteString : STRUCT
+	    Length : DINT;
+	    Data : ^CHAR;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 4)
+	  t_StructFieldDescriptor : STRUCT
+	    Name : ^CHAR;
+	    DataType : OPCUA_DataTypeId;
+	    ArrayType : BYTE;
+	    LasalSize : UDINT;
+	    Next : ^t_StructFieldDescriptor;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tCertificateDatail : STRUCT
+	    sIssuedFor : ^CHAR;
+	    sIssuedBy : ^CHAR;
+	    sValidFrom : ^CHAR;
+	    sValidTo : ^CHAR;
+	  END_STRUCT;
+#pragma pack(pop)
+	  tOpcUa_PointerType_Enum :
+	  (
+	    Element:=0,
+	    PointerToElement:=1,
+	    PointerToServer:=2
+	  )$UDINT;
+#pragma pack(push, 1)
+	  tOpcUa_Array : STRUCT
+	    ArraySize : DINT;
+	    PointerType : tOpcUa_PointerType_Enum;
+	    List : _PVOIDL;
+	  END_STRUCT;
+#pragma pack(pop)
+	  tOpcUa_Attributes_Enum :
+	  (
+	    OpcUa_Attributes_NodeId:=1,
+	    OpcUa_Attributes_NodeClass:=2,
+	    OpcUa_Attributes_BrowseName:=3,
+	    OpcUa_Attributes_DisplayName:=4,
+	    OpcUa_Attributes_Description:=5,
+	    OpcUa_Attributes_WriteMask:=6,
+	    OpcUa_Attributes_UserWriteMask:=7,
+	    OpcUa_Attributes_IsAbstract:=8,
+	    OpcUa_Attributes_Symmetric:=9,
+	    OpcUa_Attributes_InverseName:=10,
+	    OpcUa_Attributes_ContainsNoLoops:=11,
+	    OpcUa_Attributes_EventNotifier:=12,
+	    OpcUa_Attributes_Value:=13,
+	    OpcUa_Attributes_DataType:=14,
+	    OpcUa_Attributes_ValueRank:=15,
+	    OpcUa_Attributes_ArrayDimension:=16,
+	    OpcUa_Attributes_AccessLevel:=17,
+	    OpcUa_Attributes_UserAccessLevel:=18,
+	    OpcUa_Attributes_MinimumSamplingInterval:=19,
+	    OpcUa_Attributes_Historizing:=20,
+	    OpcUa_Attributes_Executable:=21,
+	    OpcUa_Attributes_UserExecutable:=22,
+	    OpcUa_Attributes_DataTypeDefinition:=23,
+	    OpcUa_Attributes_RolePermissions:=24,
+	    OpcUa_Attributes_UserRolePermissions:=25,
+	    OpcUa_Attributes_AccessRestrictions:=26,
+	    OpcUa_Attributes_AccessLevelEx:=27
+	  )$UDINT;
+#pragma pack(push, 1)
+	  tOpcUa_QualifiedName : STRUCT
+	    NamespaceIndex : UINT;
+	    Reserved : UINT;
+	    Name : ^CHAR;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_RelativePathElement : STRUCT
+	    ReferenceTypeId : OPCUA_NodeId;
+	    IsInverse : BOOL;
+	    IncludeSubtypes : BOOL;
+	    TargetName : tOpcUa_QualifiedName;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_RelativePath : STRUCT
+	    NoOfElements : DINT;
+	    Elements : ^tOpcUa_RelativePathElement;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_BrowsePath : STRUCT
+	    StartingNode : OPCUA_NodeId;
+	    RelativePath : tOpcUa_RelativePath;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_BrowsePathAsString : STRUCT
+	    StartingNode : OPCUA_NodeId;
+	    RelativePath : ^CHAR;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_BrowsePathTarget : STRUCT
+	    TargetId : ^OPCUA_NodeId;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_BrowsePathResult : STRUCT
+	    StatusCode : DINT;
+	    NoOfTargets : DINT;
+	    Targets : ^tOpcUa_BrowsePathTarget;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_String_Intern_c : STRUCT
+	    flags : UDINT;
+	    uLength : UDINT;
+	    strContent : ^void;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_QualifiedName_Intern_c : STRUCT
+	    NamespaceIndex : UINT;
+	    Reserved : UINT;
+	    Name : tOpcUa_String_Intern_c;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_NodeId_Intern_c : STRUCT
+	    IdentifierType : UINT;
+	    NamespaceIndex : UINT;
+	    Identifier : tOpcUa_String_Intern_c;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_ExpandedNodeId_Intern_c : STRUCT
+	    NodeId : tOpcUa_NodeId_Intern_c;
+	    NamespaceUri : tOpcUa_String_Intern_c;
+	    ServerIndex : UDINT;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_LocalizedText_Intern_c : STRUCT
+	    Locale : tOpcUa_String_Intern_c;
+	    Text : tOpcUa_String_Intern_c;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 4)
+	  tOpcUa_ReferenceDescription_Intern_c : STRUCT
+	    ReferenceTypeId : tOpcUa_NodeId_Intern_c;
+	    IsForward : USINT;
+	    NodeId : tOpcUa_ExpandedNodeId_Intern_c;
+	    BrowseName : tOpcUa_QualifiedName_Intern_c;
+	    DisplayName : tOpcUa_LocalizedText_Intern_c;
+	    NodeClass : t_e_OpcUa_NodeClass_Intern_c;
+	    TypeDefinition : tOpcUa_ExpandedNodeId_Intern_c;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_BrowseResult_Intern_c : STRUCT
+	    StatusCode : UDINT;
+	    ContinuationPoint : t_OPCUA_ByteString;
+	    NoOfReferences : DINT;
+	    References : ^tOpcUa_ReferenceDescription_Intern_c;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_ByteString : STRUCT
+	    Length : DINT;
+	    Data : ^USINT;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_CallMethodRequest : STRUCT
+	    ObjectId : OPCUA_NodeId;
+	    MethodId : OPCUA_NodeId;
+	    NoOfInputArguments : DINT;
+	    InputArguments : ^tOpcUa_Variant;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_CallMethodResult : STRUCT
+	    StatusCode : UDINT;
+	    NoOfInputArgumentResults : DINT;
+	    InputArgumentResults : ^UDINT;
+	    NoOfOutputArguments : DINT;
+	    OutputArguments : ^tOpcUa_Variant;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_CallMethodsResponse : STRUCT
+	    NoOfResults : DINT;
+	    Results : ^tOpcUa_CallMethodResult;
+	  END_STRUCT;
+#pragma pack(pop)
+	  tOPCUA_CertificateMode :
+	  (
+	    Reject:=0,
+	    Trust:=1,
+	    Revoke:=2,
+	    Delete:=3
+	  )$UDINT;
+#pragma pack(push, 1)
+	  tOpcUa_ContentFilterElement : STRUCT
+	    NoOfFilterOperands : DINT;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_ContentFilter : STRUCT
+	    NoOfElements : DINT;
+	    Elements : ^tOpcUa_ContentFilterElement;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_FilterResult : STRUCT
+	    NoOfSelectClauseResults : DINT;
+	    SelectClauseResults : ^UDINT;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_MonitoredItemCreateResult : STRUCT
+	    StatusCode : DINT;
+	    MonitoredItemId : UDINT;
+	    RevisedSamplingInterval : REAL;
+	    RevisedQueueSize : UDINT;
+	    EventFilterResult : tOpcUa_FilterResult;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_CreateMonitoredItemsResponse : STRUCT
+	    NoOfResults : DINT;
+	    Results : ^tOpcUa_MonitoredItemCreateResult;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_CreateSubscriptionResponse : STRUCT
+	    SubscriptionId : UDINT;
+	    RevisedPublishingInterval : REAL;
+	    RevisedLifetimeCount : UDINT;
+	    RevisedMaxKeepAliveCount : UDINT;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_DataChangeFilter : STRUCT
+	    Trigger : t_e_OpcUa_DataChangeTrigger;
+	    DeadbandType : UDINT;
+	    DeadbandValue : ARRAY [0..1] OF DINT;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_DataValue : STRUCT
+	    StatusCode : UDINT;
+	    Value : tOpcUa_Variant;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_MonitoredItemNotification : STRUCT
+	    ClientHandle : UDINT;
+	    Value : tOpcUa_DataValue;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_DataChangeNotification : STRUCT
+	    NoOfMonitoredItems : DINT;
+	    MonitoredItems : ^tOpcUa_MonitoredItemNotification;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 4)
+	  tOpcUa_DataElementExtern : STRUCT
+	    pLabel : ^CHAR;
+	    LasalID : UDINT;
+	    Station : DINT;
+	    TypeID : DINT;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_DataLog : STRUCT
+	    hItem : UDINT;
+	    hPrimaryKey : DINT;
+	    NodeId : OPCUA_NodeId;
+	    SamplingRate : ARRAY [0..1] OF DINT;
+	    Filter : tOpcUa_DataChangeFilter;
+	    Active_used : UDINT;
+	  END_STRUCT;
+#pragma pack(pop)
+	  tOpcUa_DataTypes_Enum :
+	  (
+	    OpcUa_DataType_Boolean:=1,
+	    OpcUa_DataType_SByte:=2,
+	    OpcUa_DataType_Byte:=3,
+	    OpcUa_DataType_Int16:=4,
+	    OpcUa_DataType_UInt16:=5,
+	    OpcUa_DataType_Int32:=6,
+	    OpcUa_DataType_UInt32:=7,
+	    OpcUa_DataType_Int64:=8,
+	    OpcUa_DataType_UInt64:=9,
+	    OpcUa_DataType_Float:=10,
+	    OpcUa_DataType_Double:=11,
+	    OpcUa_DataType_String:=12,
+	    OpcUa_DataType_DateTime:=13,
+	    OpcUa_DataType_Guid:=14,
+	    OpcUa_DataType_ByteString:=15,
+	    OpcUa_DataType_XmlElement:=16,
+	    OpcUa_DataType_NodeId:=17,
+	    OpcUa_DataType_ExpandedNodeId:=18,
+	    OpcUa_DataType_StatusCode:=19,
+	    OpcUa_DataType_QualifiedName:=20,
+	    OpcUa_DataType_LocalizedText:=21,
+	    OpcUa_DataType_ExtensionObject:=22,
+	    OpcUa_DataType_DataValue:=23,
+	    OpcUa_DataType_Variant:=24,
+	    OpcUa_DataType_DiagnosticInfo:=25
+	  )$UDINT;
+#pragma pack(push, 1)
+	  tOpcUa_DateTime : STRUCT
+	    dwLowDateTime : UDINT;
+	    dwHighDateTime : UDINT;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 4)
+	  tOpcUa_DataValueEx : STRUCT
+	    Value : tOpcUa_Variant;
+	    StatusCode : UDINT;
+	    SourceTimestamp : tOpcUa_DateTime;
+	    ServerTimestamp : tOpcUa_DateTime;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_DeleteSubscriptionsResponse : STRUCT
+	    NoOfResults : DINT;
+	    Results : ^UDINT;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_EnumValue : STRUCT
+	    value : int64;
+	    displayName : tOPCUA_LocalizedText;
+	    description : tOPCUA_LocalizedText;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_EUInformation : STRUCT
+	    NamespaceUri : ^CHAR;
+	    UnitId : DINT;
+	    DisplayName : ^CHAR;
+	    Description : ^CHAR;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_EventFieldList : STRUCT
+	    ClientHandle : UDINT;
+	    NoOfEventFields : DINT;
+	    EventFields : ^tOpcUa_Variant;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_SimpleAttributeOperand : STRUCT
+	    TypeDefinitionId : OPCUA_NodeId;
+	    NoOfBrowsePath : DINT;
+	    BrowsePath : ^tOpcUa_QualifiedName;
+	    AttributeId : UDINT;
+	    IndexRange : ^CHAR;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_EventFilter : STRUCT
+	    NoOfSelectClauses : DINT;
+	    SelectClauses : ^tOpcUa_SimpleAttributeOperand;
+	    WhereClause : tOpcUa_ContentFilter;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_EventNotificationList : STRUCT
+	    NoOfEvents : DINT;
+	    Events : ^tOpcUa_EventFieldList;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_ExtensionObject : STRUCT
+	    TypeId : OPCUA_NodeId;
+	    Object : _PVOIDL;
+	    BinaryEncodingTypeId : UDINT;
+	    XMLEncodingTypeId : UDINT;
+	    AllocationSize : UDINT;
+	    Encoding : t_e_OpcUa_ExtensionObjectEncoding;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_HistoryData : STRUCT
+	    NoOfDataValues : DINT;
+	    DataValues : ^tOpcUa_DataValueEx;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_HistoryReadResult : STRUCT
+	    StatusCode : UDINT;
+	    ContinuationPoint : t_OPCUA_ByteString;
+	    HistoryData : tOpcUa_HistoryData;
+	  END_STRUCT;
+#pragma pack(pop)
+	  tOpcUa_MemoryAccessMode_Enum :
+	  (
+	    MemoryAccessMode_Server,
+	    MemoryAccessMode_ServerToMemory,
+	    MemoryAccessMode_Memory,
+	    MemoryAccessMode_Station:=3
+	  )$SINT;
+#pragma pack(push, 1)
+	  tOpcUa_ModifySubscriptionResponse : STRUCT
+	    RevisedPublishingInterval : REAL;
+	    RevisedLifetimeCount : UDINT;
+	    RevisedMaxKeepAliveCount : UDINT;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_ReadValueId : STRUCT
+	    NodeId : OPCUA_NodeId;
+	    AttributeId : UDINT;
+	    IndexRange : ^CHAR;
+	    DataEncoding : ^tOpcUa_QualifiedName;
+	  END_STRUCT;
+#pragma pack(pop)
+	  tOpcUa_MonitoringMode_Enum :
+	  (
+	    MonitoringMode_Disabled:=0,
+	    MonitoringMode_Sampling:=1,
+	    MonitoringMode_Reporting:=2
+	  )$UDINT;
+#pragma pack(push, 1)
+	  tOpcUa_MonitoringParameters : STRUCT
+	    ClientHandle : UDINT;
+	    SamplingInterval : REAL;
+	    QueueSize : UDINT;
+	    DiscardOldest : BOOL;
+	    Filter : ^tOpcUa_EventFilter;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_MonitoredItemCreateRequest : STRUCT
+	    ItemToMonitor : tOpcUa_ReadValueId;
+	    MonitoringMode : tOpcUa_MonitoringMode_Enum;
+	    RequestedParameters : tOpcUa_MonitoringParameters;
+	  END_STRUCT;
+#pragma pack(pop)
+	  tOpcUa_NodeClass_Enum :
+	  (
+	    OpcUa_NodeClass_Unspecified:=0,
+	    OpcUa_NodeClass_Object:=1,
+	    OpcUa_NodeClass_Variable:=2,
+	    OpcUa_NodeClass_Method:=4,
+	    OpcUa_NodeClass_ObjectType:=8,
+	    OpcUa_NodeClass_VariableType:=16,
+	    OpcUa_NodeClass_ReferenceType:=32,
+	    OpcUa_NodeClass_DataType:=64,
+	    OpcUa_NodeClass_View:=128,
+	    OpcUa_NodeClass_Invalid:=4294967295
+	  )$UDINT;
+#pragma pack(push, 1)
+	  tOpcUa_NotificationMessage : STRUCT
+	    SequenceNumber : UDINT;
+	    NoOfNotificationData : DINT;
+	    NotificationData : ^tOpcUa_ExtensionObject;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_PublishResponse : STRUCT
+	    SubscriptionId : UDINT;
+	    NoOfAvailableSequenceNumbers : DINT;
+	    AvailableSequenceNumbers : ^UDINT;
+	    MoreNotifications : BOOL;
+	    NotificationMessage : tOpcUa_NotificationMessage;
+	    NoOfResults : DINT;
+	    Results : ^UDINT;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_Range : STRUCT
+	    Low : REAL;
+	    High : REAL;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_SubscriptionAcknowledgement : STRUCT
+	    SubscriptionId : UDINT;
+	    SequenceNumber : UDINT;
+	  END_STRUCT;
+#pragma pack(pop)
+	  tOpcUa_TimestampsToReturn_Enum :
+	  (
+	    TimestampsToReturn_Source:=0,
+	    TimestampsToReturn_Server:=1,
+	    TimestampsToReturn_Both:=2,
+	    TimestampsToReturn_Neither:=3,
+	    TimestampsToReturn_Invalid:=4
+	  )$UDINT;
+#pragma pack(push, 1)
+	  tOpcUa_TimeZoneDataType : STRUCT
+	    Offset : INT;
+	    DaylightSavingInOffset : BOOL;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  tOpcUa_TranslateBrowsePathsToNodeIdsResponse : STRUCT
+	    NoOfResults : DINT;
+	    Results : ^tOpcUa_BrowsePathResult;
+	  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+	  uint64 : STRUCT
+	    low : UDINT;
+	    high : UDINT;
+	  END_STRUCT;
+#pragma pack(pop)
+	END_TYPE
+END_CLASS;
+#pragma define (restore)
+OPC_UA_DataLoggerBase : CLASS_PUBLIC
+	TYPE
+	  t_e_OpcUa_LoggerType :
+	  (
+	    LT_Invalid,
+	    LT_RAM,
+	    LT_SRAM
+	  )$UDINT;
+	END_TYPE
+END_CLASS;
+#pragma define (restore)
+OPC_UA_EncryptionBase : CLASS_PUBLIC
+#include "..\Class\OPC_UA_EncryptionBase\custom\encryption_utilities_st.h"
+	TYPE
+	  CmdClassSvr :
+	  (
+	    GetVersion
 	  )$UINT;
 	END_TYPE
 END_CLASS;

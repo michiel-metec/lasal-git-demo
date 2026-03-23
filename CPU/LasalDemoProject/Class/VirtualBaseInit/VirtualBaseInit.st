@@ -389,15 +389,15 @@ END_FUNCTION //VIRTUAL GLOBAL VirtualBaseInit::WriteDataOff
 //[>pData]	Zeiger auf den Ergebnispuffer
 //[>udMax]	maximale Anzahl an Bytes die kopiert werden
 //[<udLen]	Anzahl der kopierten Bytes
-FUNCTION VirtualBaseInit::ReadDataOff
-VAR_INPUT
-	udOff		: UDINT;
-	pData		: ^USINT;
-	udMax		: UDINT;
-END_VAR
-VAR_OUTPUT
-	udLen		: UDINT;
-END_VAR
+FUNCTION VIRTUAL GLOBAL VirtualBaseInit::ReadDataOff
+	VAR_INPUT
+		udOff 	: UDINT;
+		pData 	: ^USINT;
+		udMax 	: UDINT;
+	END_VAR
+	VAR_OUTPUT
+		udLen 	: UDINT;
+	END_VAR
 
 	udLen := GetLength();
 	IF udLen > udOff THEN

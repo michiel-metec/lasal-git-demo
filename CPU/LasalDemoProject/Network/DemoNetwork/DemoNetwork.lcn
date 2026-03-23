@@ -18,11 +18,510 @@
 				<Client Name="cDemoClient" Value="0"/>
 			</Channels>
 		</Object>
+		<Object
+			Name           = "OPC_UA1"
+			GUID           = "{55AD6EEA-C7C5-4422-B203-B224AC663148}"
+			Class          = "OPC_UA"
+			Position       = "(810,900)"
+			Visualized     = "true"
+			Remotely       = "true"
+			BackgroundTime = "10 ms">
+			<Channels>
+				<Server Name="ClassSvr"/>
+				<Server Name="CmdManualStart" Value="0">
+					<OPCSettings WriteProtected="false"/>
+				</Server>
+				<Server Name="CycTimeAct"/>
+				<Server Name="CycTimeAvg"/>
+				<Server Name="CycTimeMax"/>
+				<Server Name="CycTimeMin"/>
+				<Server Name="ErrorCode"/>
+				<Server Name="RemoteServerStatus">
+					<OPCSettings WriteProtected="false"/>
+				</Server>
+				<Server Name="ResetCycTimes">
+					<OPCSettings WriteProtected="false"/>
+				</Server>
+				<Server Name="TraceLevel">
+					<OPCSettings WriteProtected="false"/>
+				</Server>
+				<Server Name="Trigger"/>
+				<Server Name="UTCOffset">
+					<OPCSettings WriteProtected="false"/>
+				</Server>
+				<Client Name="Config" Value="1"/>
+				<Client Name="Encryption"/>
+				<Client Name="SigClib"/>
+			</Channels>
+			<!-- List of Networks in this component -->
+			<Networks>
+				<Network>
+					<!-- List of Components in this network -->
+					<Components>
+						<Object
+							Name           = "UserLogging"
+							GUID           = "{FAFDE7FB-26F4-4FE1-B0BB-6372B83819B5}"
+							Class          = "_UserLogging"
+							BackgroundTime = "500 ms">
+							<Channels>
+								<Server Name="DebugCnt"/>
+								<Server Name="Env_EventLogLevelName"/>
+								<Server Name="Env_EventLogLevelVal"/>
+								<Server Name="Env_FileLogLevelName"/>
+								<Server Name="Env_FileLogLevelVal"/>
+								<Server Name="ErrorCnt"/>
+								<Server Name="EventLogLevel"/>
+								<Server Name="FileLogLevel"/>
+								<Server Name="Flush"/>
+								<Server Name="InfoCnt"/>
+								<Server Name="InitOK"/>
+								<Server Name="LogFileQuota" Value="USERLOGGING_DEFAULTLOGFILE_QUOTA"/>
+								<Server Name="LogFlushInterval" Value="USERLOGGING_LOGFLUSH_INTERVAL"/>
+								<Server Name="WarningCnt"/>
+								<Client Name="cActivateTrace" Value="0"/>
+								<Client Name="cEventLog"/>
+								<Client Name="cLogBufferSize" Value="USERLOGGING_DEFAULTLOGSIZE"/>
+								<Client Name="cLogFileID" Value="6"/>
+								<Client Name="SigCLib"/>
+								<Client Name="SysMsg"/>
+							</Channels>
+							<!-- List of Networks in this component -->
+							<Networks>
+								<Network>
+									<!-- List of Components in this network -->
+									<Components>
+										<Object Name="EnvVar_ForwLvl" GUID="{7DC7FBCF-865A-4116-89A8-ADEDFF6207F3}" Class="EnvironmentVariable">
+											<Channels>
+												<Server Name="sNumericValue"/>
+												<Server Name="sRefresh"/>
+												<Server Name="sStatus"/>
+												<Server Name="sStringValue"/>
+												<Server Name="sVariableName"/>
+											</Channels>
+											<!-- List of Networks in this component -->
+											<Networks>
+												<Network>
+													<!-- List of Components in this network -->
+													<Components>
+														<Object Name="_base" GUID="{C2973D71-EF75-4005-8AF1-77F104FF54ED}" Class="ENVBase">
+															<Channels>
+																<Server Name="sChangedVarName"/>
+																<Server Name="sChangedVarValue"/>
+																<Server Name="sStatus"/>
+															</Channels>
+															<!-- List of Networks in this component -->
+															<Networks>
+																<Network>
+																	<!-- List of Components in this network -->
+																	<Components>
+																		<Object Name="ASCII_BIN" GUID="{3ACDF87D-B037-4B2C-B15B-E413CECEA900}" Class="ASCII_BIN">
+																			<Channels>
+																				<Server Name="Obj_channel"/>
+																			</Channels>
+																		</Object>
+																		<Object Name="EnvironmentVariableLib" GUID="{7D75E7A8-34B9-4C69-9165-8B5948573553}" Class="ENVLib">
+																			<Channels>
+																				<Server Name="ClassSvr"/>
+																			</Channels>
+																		</Object>
+																	</Components>
+																	<Connections>
+																	</Connections>
+																</Network>
+															</Networks>
+														</Object>
+														<Object Name="ENVName" GUID="{585F6BCA-991C-4C59-9DB1-3B3B8C4D6676}" Class="ENVStringAction">
+															<Channels>
+																<Server Name="Data"/>
+																<Client Name="cAction"/>
+															</Channels>
+															<!-- List of Networks in this component -->
+															<Networks>
+																<Network>
+																	<!-- List of Components in this network -->
+																	<Components>
+																		<Object Name="_base" GUID="{4D6BC4F7-A9A3-43FC-82E2-D900DB128B1F}" Class="String">
+																			<Channels>
+																				<Server Name="Data"/>
+																				<Client Name="SingleRealloc" Value="1"/>
+																			</Channels>
+																			<!-- List of Networks in this component -->
+																			<Networks>
+																				<Network>
+																					<!-- List of Components in this network -->
+																					<Components>
+																						<Object Name="_base" GUID="{B9D2D328-1416-469A-BE13-9F6CBBB1958D}" Class="StringInternal">
+																							<Channels>
+																								<Server Name="Data"/>
+																								<Client Name="DataBuffer"/>
+																								<Client Name="SingleRealloc" Value="1"/>
+																							</Channels>
+																							<!-- List of Networks in this component -->
+																							<Networks>
+																								<Network>
+																									<!-- List of Components in this network -->
+																									<Components>
+																										<Object Name="_base" GUID="{6CBDDE57-D222-420A-BC45-D2266096244E}" Class="VirtualBaseInit">
+																											<Channels>
+																												<Server Name="Data"/>
+																											</Channels>
+																										</Object>
+																									</Components>
+																									<Connections>
+																									</Connections>
+																								</Network>
+																							</Networks>
+																						</Object>
+																						<Object Name="MerkerEx0" GUID="{53955FF7-8ABE-4B49-B914-227100C3FDEF}" Class="MerkerEx">
+																							<Channels>
+																								<Server Name="m_udLength"/>
+																								<Client Name="ThreadSafe" Value="0"/>
+																							</Channels>
+																						</Object>
+																					</Components>
+																					<Connections>
+																					</Connections>
+																				</Network>
+																			</Networks>
+																		</Object>
+																	</Components>
+																	<Connections>
+																	</Connections>
+																</Network>
+															</Networks>
+														</Object>
+														<Object Name="ENVValue" GUID="{DA00CAAC-D22E-4808-8A86-52812DE40C00}" Class="ENVStringAction">
+															<Channels>
+																<Server Name="Data"/>
+																<Client Name="cAction"/>
+															</Channels>
+															<!-- List of Networks in this component -->
+															<Networks>
+																<Network>
+																	<!-- List of Components in this network -->
+																	<Components>
+																		<Object Name="_base" GUID="{4D6BC4F7-A9A3-43FC-82E2-D900DB128B1F}" Class="String">
+																			<Channels>
+																				<Server Name="Data"/>
+																				<Client Name="SingleRealloc" Value="1"/>
+																			</Channels>
+																			<!-- List of Networks in this component -->
+																			<Networks>
+																				<Network>
+																					<!-- List of Components in this network -->
+																					<Components>
+																						<Object Name="_base" GUID="{B9D2D328-1416-469A-BE13-9F6CBBB1958D}" Class="StringInternal">
+																							<Channels>
+																								<Server Name="Data"/>
+																								<Client Name="DataBuffer"/>
+																								<Client Name="SingleRealloc" Value="1"/>
+																							</Channels>
+																							<!-- List of Networks in this component -->
+																							<Networks>
+																								<Network>
+																									<!-- List of Components in this network -->
+																									<Components>
+																										<Object Name="_base" GUID="{6CBDDE57-D222-420A-BC45-D2266096244E}" Class="VirtualBaseInit">
+																											<Channels>
+																												<Server Name="Data"/>
+																											</Channels>
+																										</Object>
+																									</Components>
+																									<Connections>
+																									</Connections>
+																								</Network>
+																							</Networks>
+																						</Object>
+																						<Object Name="MerkerEx0" GUID="{53955FF7-8ABE-4B49-B914-227100C3FDEF}" Class="MerkerEx">
+																							<Channels>
+																								<Server Name="m_udLength"/>
+																								<Client Name="ThreadSafe" Value="0"/>
+																							</Channels>
+																						</Object>
+																					</Components>
+																					<Connections>
+																					</Connections>
+																				</Network>
+																			</Networks>
+																		</Object>
+																	</Components>
+																	<Connections>
+																	</Connections>
+																</Network>
+															</Networks>
+														</Object>
+													</Components>
+													<Connections>
+													</Connections>
+												</Network>
+											</Networks>
+										</Object>
+										<Object Name="EnvVar_LogLvl" GUID="{74C92320-443F-4047-9043-F63B3F5A1FCD}" Class="EnvironmentVariable">
+											<Channels>
+												<Server Name="sNumericValue"/>
+												<Server Name="sRefresh"/>
+												<Server Name="sStatus"/>
+												<Server Name="sStringValue"/>
+												<Server Name="sVariableName"/>
+											</Channels>
+											<!-- List of Networks in this component -->
+											<Networks>
+												<Network>
+													<!-- List of Components in this network -->
+													<Components>
+														<Object Name="_base" GUID="{C2973D71-EF75-4005-8AF1-77F104FF54ED}" Class="ENVBase">
+															<Channels>
+																<Server Name="sChangedVarName"/>
+																<Server Name="sChangedVarValue"/>
+																<Server Name="sStatus"/>
+															</Channels>
+															<!-- List of Networks in this component -->
+															<Networks>
+																<Network>
+																	<!-- List of Components in this network -->
+																	<Components>
+																		<Object Name="ASCII_BIN" GUID="{3ACDF87D-B037-4B2C-B15B-E413CECEA900}" Class="ASCII_BIN">
+																			<Channels>
+																				<Server Name="Obj_channel"/>
+																			</Channels>
+																		</Object>
+																		<Object Name="EnvironmentVariableLib" GUID="{7D75E7A8-34B9-4C69-9165-8B5948573553}" Class="ENVLib">
+																			<Channels>
+																				<Server Name="ClassSvr"/>
+																			</Channels>
+																		</Object>
+																	</Components>
+																	<Connections>
+																	</Connections>
+																</Network>
+															</Networks>
+														</Object>
+														<Object Name="ENVName" GUID="{585F6BCA-991C-4C59-9DB1-3B3B8C4D6676}" Class="ENVStringAction">
+															<Channels>
+																<Server Name="Data"/>
+																<Client Name="cAction"/>
+															</Channels>
+															<!-- List of Networks in this component -->
+															<Networks>
+																<Network>
+																	<!-- List of Components in this network -->
+																	<Components>
+																		<Object Name="_base" GUID="{4D6BC4F7-A9A3-43FC-82E2-D900DB128B1F}" Class="String">
+																			<Channels>
+																				<Server Name="Data"/>
+																				<Client Name="SingleRealloc" Value="1"/>
+																			</Channels>
+																			<!-- List of Networks in this component -->
+																			<Networks>
+																				<Network>
+																					<!-- List of Components in this network -->
+																					<Components>
+																						<Object Name="_base" GUID="{B9D2D328-1416-469A-BE13-9F6CBBB1958D}" Class="StringInternal">
+																							<Channels>
+																								<Server Name="Data"/>
+																								<Client Name="DataBuffer"/>
+																								<Client Name="SingleRealloc" Value="1"/>
+																							</Channels>
+																							<!-- List of Networks in this component -->
+																							<Networks>
+																								<Network>
+																									<!-- List of Components in this network -->
+																									<Components>
+																										<Object Name="_base" GUID="{6CBDDE57-D222-420A-BC45-D2266096244E}" Class="VirtualBaseInit">
+																											<Channels>
+																												<Server Name="Data"/>
+																											</Channels>
+																										</Object>
+																									</Components>
+																									<Connections>
+																									</Connections>
+																								</Network>
+																							</Networks>
+																						</Object>
+																						<Object Name="MerkerEx0" GUID="{53955FF7-8ABE-4B49-B914-227100C3FDEF}" Class="MerkerEx">
+																							<Channels>
+																								<Server Name="m_udLength"/>
+																								<Client Name="ThreadSafe" Value="0"/>
+																							</Channels>
+																						</Object>
+																					</Components>
+																					<Connections>
+																					</Connections>
+																				</Network>
+																			</Networks>
+																		</Object>
+																	</Components>
+																	<Connections>
+																	</Connections>
+																</Network>
+															</Networks>
+														</Object>
+														<Object Name="ENVValue" GUID="{DA00CAAC-D22E-4808-8A86-52812DE40C00}" Class="ENVStringAction">
+															<Channels>
+																<Server Name="Data"/>
+																<Client Name="cAction"/>
+															</Channels>
+															<!-- List of Networks in this component -->
+															<Networks>
+																<Network>
+																	<!-- List of Components in this network -->
+																	<Components>
+																		<Object Name="_base" GUID="{4D6BC4F7-A9A3-43FC-82E2-D900DB128B1F}" Class="String">
+																			<Channels>
+																				<Server Name="Data"/>
+																				<Client Name="SingleRealloc" Value="1"/>
+																			</Channels>
+																			<!-- List of Networks in this component -->
+																			<Networks>
+																				<Network>
+																					<!-- List of Components in this network -->
+																					<Components>
+																						<Object Name="_base" GUID="{B9D2D328-1416-469A-BE13-9F6CBBB1958D}" Class="StringInternal">
+																							<Channels>
+																								<Server Name="Data"/>
+																								<Client Name="DataBuffer"/>
+																								<Client Name="SingleRealloc" Value="1"/>
+																							</Channels>
+																							<!-- List of Networks in this component -->
+																							<Networks>
+																								<Network>
+																									<!-- List of Components in this network -->
+																									<Components>
+																										<Object Name="_base" GUID="{6CBDDE57-D222-420A-BC45-D2266096244E}" Class="VirtualBaseInit">
+																											<Channels>
+																												<Server Name="Data"/>
+																											</Channels>
+																										</Object>
+																									</Components>
+																									<Connections>
+																									</Connections>
+																								</Network>
+																							</Networks>
+																						</Object>
+																						<Object Name="MerkerEx0" GUID="{53955FF7-8ABE-4B49-B914-227100C3FDEF}" Class="MerkerEx">
+																							<Channels>
+																								<Server Name="m_udLength"/>
+																								<Client Name="ThreadSafe" Value="0"/>
+																							</Channels>
+																						</Object>
+																					</Components>
+																					<Connections>
+																					</Connections>
+																				</Network>
+																			</Networks>
+																		</Object>
+																	</Components>
+																	<Connections>
+																	</Connections>
+																</Network>
+															</Networks>
+														</Object>
+													</Components>
+													<Connections>
+													</Connections>
+												</Network>
+											</Networks>
+										</Object>
+									</Components>
+									<Connections>
+									</Connections>
+								</Network>
+							</Networks>
+						</Object>
+					</Components>
+					<Connections>
+					</Connections>
+				</Network>
+			</Networks>
+		</Object>
+		<Object
+			Name       = "OPC_UA_OpenSSL_v1_1_11"
+			GUID       = "{C1C17342-47A6-4DF0-94C5-3F84DE754B78}"
+			Class      = "OPC_UA_OpenSSL_v1_1_1"
+			Position   = "(120,960)"
+			Visualized = "false">
+			<Channels>
+				<Server Name="ClassSvr"/>
+			</Channels>
+			<!-- List of Networks in this component -->
+			<Networks>
+				<Network>
+					<!-- List of Components in this network -->
+					<Components>
+						<Object Name="_base" GUID="{81C00E1F-E9CA-4346-984A-F1C599FC2F72}" Class="OPC_UA_EncryptionBase">
+							<Channels>
+								<Server Name="ClassSvr"/>
+							</Channels>
+						</Object>
+					</Components>
+					<Connections>
+					</Connections>
+				</Network>
+			</Networks>
+		</Object>
+		<Object
+			Name       = "OPC_UA_Server1"
+			GUID       = "{0AB9FAA6-2300-4A27-BB02-EF7EBA45080E}"
+			Class      = "OPC_UA_Server"
+			Position   = "(2010,900)"
+			Visualized = "true"
+			Remotely   = "true">
+			<Channels>
+				<Server Name="AuthentMode">
+					<OPCSettings WriteProtected="false"/>
+				</Server>
+				<Server Name="ClassSvr"/>
+				<Server Name="CycTimeAct"/>
+				<Server Name="CycTimeAvg"/>
+				<Server Name="CycTimeMax"/>
+				<Server Name="CycTimeMin"/>
+				<Server Name="ResetCycTimes">
+					<OPCSettings WriteProtected="false"/>
+				</Server>
+				<Client Name="Config" Value="0"/>
+				<Client Name="EncryptionConfig" Value="7"/>
+				<Client Name="OPC_UA"/>
+			</Channels>
+			<!-- List of Networks in this component -->
+			<Networks>
+				<Network>
+					<!-- List of Components in this network -->
+					<Components>
+						<Object Name="_base" GUID="{CA951D57-EE47-4AAA-99A3-6CB4068D1C5E}" Class="OPC_UA_ModuleBase">
+							<Channels>
+								<Server Name="ClassSvr"/>
+								<Client Name="OPC_UA"/>
+							</Channels>
+							<!-- List of Networks in this component -->
+							<Networks>
+								<Network>
+									<!-- List of Components in this network -->
+									<Components>
+										<Object Name="_base" GUID="{BA52242E-696F-4809-9DBE-D571143AA204}" Class="OPC_UA_Base">
+											<Channels>
+												<Server Name="ClassSvr"/>
+												<Client Name="OPC_UA"/>
+											</Channels>
+										</Object>
+									</Components>
+									<Connections>
+									</Connections>
+								</Network>
+							</Networks>
+						</Object>
+					</Components>
+					<Connections>
+					</Connections>
+				</Network>
+			</Networks>
+		</Object>
 	</Components>
 	<Comments>
 	</Comments>
 	<!-- List of Connections in this network -->
 	<Connections>
+		<Connection Source="OPC_UA_Server1.OPC_UA" Destination="OPC_UA1.ClassSvr" Vertices="(2010,990),(1366,990),"/>
+		<Connection Source="OPC_UA1.Encryption" Destination="OPC_UA_OpenSSL_v1_1_11.ClassSvr" Vertices="(810,1050),(616,1050),"/>
 	</Connections>
 	<!-- Headerfiles -->
 	<Options>

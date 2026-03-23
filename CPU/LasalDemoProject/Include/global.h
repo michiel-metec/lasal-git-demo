@@ -31,6 +31,7 @@
 #include "..\Source\interfaces\lsl_st_wireless.h"
 #include "..\Class\ECAT_Master_Base\ECAT_Master_Base_IF.h"
 #include <LinkerTypes.h>
+#include <SysMsgTypes.h>
 
 #include "unit.h"
 #include "UserDef.h"

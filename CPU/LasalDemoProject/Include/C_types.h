@@ -42,6 +42,8 @@ typedef struct _I_HC_Type   //! <Type Comment="Hardware Code an axis&#13;&#10;&#
   } _I_HC_Type;
 #pragma pack(pop)
 
+typedef USINT *_PVOIDL;
+
 typedef struct 
   {
     long NoHW : 1;
@@ -103,6 +105,13 @@ typedef struct
     long ManufactureSpec3 : 1;
   }DS402_State;
 
+typedef UDINT ENV_Status; 
+    #define ENV_NoVariableName 0
+    #define ENV_ValidValue 1
+    #define ENV_NoInterface 2
+    #define ENV_VariableNameNotFound 3
+    #define ENV_NoValueString 4
+
 typedef struct 
   {
     long Valid : 1;  //! <Type Comment="must be 1 to Start FileEx work" Name="FeSetup.Valid"/>
@@ -134,9 +143,213 @@ typedef struct IO_State
   } IO_State;
 #pragma pack(pop)
 
+#pragma pack(push, 1)
+typedef struct OPCUA_TimeStamp 
+  {
+    UDINT valLow;
+    DINT valHigh;
+  } OPCUA_TimeStamp;
+#pragma pack(pop)
+
+#pragma pack(push, 1)
+typedef struct OPCUA_Alarm 
+  {
+    OPCUA_TimeStamp TimeStamp;
+    UDINT Cycle;
+    DINT Active;
+    CHAR *Number;
+    CHAR *Description;
+  } OPCUA_Alarm;
+#pragma pack(pop)
+
+#pragma pack(push, 1)
+typedef struct OPCUA_AlarmUC 
+  {
+    OPCUA_TimeStamp TimeStamp;
+    UDINT Cycle;
+    DINT Active;
+    UINT *Number;
+    UINT *Description;
+  } OPCUA_AlarmUC;
+#pragma pack(pop)
+
+typedef INT OPCUA_ArrayType_Enum;   //! <Type Comment="Defines if the data value represents a scalar value or an array." Name="OPCUA_ArrayType_Enum"/>
+    #define OpcUa_VariantArrayType_Scalar 0
+    #define OpcUa_VariantArrayType_Array 1
+    #define OpcUa_VariantArrayType_Matrix 2
+
+#pragma pack(push, 1)
+typedef struct OPCUA_Change 
+  {
+    OPCUA_TimeStamp TimeStamp;
+    UDINT Cycle;
+    CHAR *DatasetId;
+    CHAR *Dataset;
+    CHAR *ParameterId;
+    CHAR *UserId;
+    CHAR *User;
+    CHAR *Reason;
+  } OPCUA_Change;
+#pragma pack(pop)
+
+#pragma pack(push, 1)
+typedef struct OPCUA_ChangeUC 
+  {
+    OPCUA_TimeStamp TimeStamp;
+    UDINT Cycle;
+    CHAR *DatasetId;
+    CHAR *Dataset;
+    CHAR *ParameterId;
+    UINT *UserId;
+    UINT *User;
+    UINT *Reason;
+  } OPCUA_ChangeUC;
+#pragma pack(pop)
+
+#pragma pack(push, 1)
+typedef struct OPCUA_ClientDiagnosticInfo 
+  {
+    CHAR *ApplicationUri;  //! <Type Comment="Client / session application uri." Name="OPCUA_ClientDiagnosticInfo.ApplicationUri"/>
+    CHAR *ApplicationName;  //! <Type Comment="Client / session application name." Name="OPCUA_ClientDiagnosticInfo.ApplicationName"/>
+    OPCUA_TimeStamp Start;  //! <Type Comment="Timestamp when the client created the session." Name="OPCUA_ClientDiagnosticInfo.Start"/>
+    OPCUA_TimeStamp LastTransfer;  //! <Type Comment="Timestamp when the client exchanged some data with the server (regardless which kind of information)" Name="OPCUA_ClientDiagnosticInfo.LastTransfer"/>
+    UDINT ItemsBrowsed;  //! <Type Comment="Information about how much items have been browsed in the session." Name="OPCUA_ClientDiagnosticInfo.ItemsBrowsed"/>
+    UDINT ItemsRead;  //! <Type Comment="Information about how much items have been read in the session." Name="OPCUA_ClientDiagnosticInfo.ItemsRead"/>
+    UDINT ItemsWritten;  //! <Type Comment="Information about how much items have been written in the session." Name="OPCUA_ClientDiagnosticInfo.ItemsWritten"/>
+    void *NextDiagnosticInfo;  //! <Type Comment="Pointer to the next item in the list." Name="OPCUA_ClientDiagnosticInfo.NextDiagnosticInfo"/>
+  } OPCUA_ClientDiagnosticInfo;
+#pragma pack(pop)
+
+typedef UDINT OPCUA_DataTypeId; 
+    #define Boolean 1
+    #define Int8 2
+    #define Int16 4
+    #define Int32 6
+    #define Int64 8
+    #define UInt8 3
+    #define UInt16 5
+    #define UInt32 7
+    #define UInt64 9
+    #define Float 10
+    #define Double 11
+    #define Text 12
+    #define OPC_DateTime 13
+    #define OPC_ByteString 15
+    #define OPC_LocalizedText 21
+    #define OPC_TimeZoneData 8912
+    #define OPC_NodeId 17
+    #define OPC_EnumValueType 7594
+    #define ExtensionObject 22
+    #define MemoryBoolean 1000001
+    #define MemoryInt8 1000002
+    #define MemoryInt16 1000004
+    #define MemoryInt32 1000006
+    #define MemoryUInt8 1000003
+    #define MemoryUInt16 1000005
+    #define MemoryUInt32 1000007
+    #define MemoryFloat 1000010
+    #define MemoryDouble 1000011
+    #define MemoryText 1000012
+    #define MemoryOPC_DateTime 1000013
+    #define MemoryOPC_ByteString 1000015
+    #define MemoryOPC_LocalizedText 1000021
+    #define MemoryOPC_TimeZoneData 1008912
+    #define MemoryOPC_NodeId 1000017
+    #define MemoryExtensionObject 1000022
+    #define ServerPointsToBoolean 2000001
+    #define ServerPointsToInt8 2000002
+    #define ServerPointsToInt16 2000004
+    #define ServerPointsToInt32 2000005
+    #define ServerPointsToUInt8 2000003
+    #define ServerPointsToUInt16 2000005
+    #define ServerPointsToUInt32 2000007
+    #define ServerPointsToFloat 2000010
+    #define ServerPointsToDouble 2000011
+    #define ServerPointsToText 2000012
+    #define ServerPointsToOPC_DateTime 2000013
+    #define ServerPointsToOPC_ByteString 2000015
+    #define ServerPointsToOPC_LocalizedText 2000021
+    #define ServerPointsToOPC_TimeZoneData 2008912
+    #define ServerPointsToOPC_NodeId 2000017
+    #define ServerPointsToExtensionObject 2000022
+
+typedef UDINT OPCUA_MessageSecurityMode_Enum; 
+    #define OPCUA_SecurityMode_None 1
+    #define OPCUA_SecurityMode_Sign 2
+    #define OPCUA_SecurityMode_SignAndEncrypt 3
+
+#pragma pack(push, 1)
+typedef struct OPCUA_NodeId   //! <Type Comment="Representing an OpcUa_NodeId in Lasal. There are only two types of identifier defined: numeric, and string identifier." Name="OPCUA_NodeId"/>
+  {
+    UINT IdentifierType;  //! <Type Comment="The node id has one of the following types:&#13;&#10;&#13;&#10;0..Numeric identifier&#13;&#10;1..String identifier&#13;&#10;2..Numeric identifier" Name="OPCUA_NodeId.IdentifierType"/>
+    UINT NamespaceIndex;  //! <Type Comment="Namespace of the node id." Name="OPCUA_NodeId.NamespaceIndex"/>
+    UDINT NumericIdentifier;  //! <Type Comment="The numeric identifier." Name="OPCUA_NodeId.NumericIdentifier"/>
+    CHAR *StringIdentifier;  //! <Type Comment="The string identifier." Name="OPCUA_NodeId.StringIdentifier"/>
+  } OPCUA_NodeId;
+#pragma pack(pop)
+
+#pragma pack(push, 1)
+typedef struct OPCUA_NodeInfo 
+  {
+    OPCUA_NodeId NodeId;
+    OPCUA_DataTypeId DataTypeId;
+    UDINT LasalId;
+  } OPCUA_NodeInfo;
+#pragma pack(pop)
+
+typedef UDINT OPCUA_SecurityPolicy_Enum; 
+    #define OPCUA_SecurityPolicy_None 0
+    #define OPCUA_SecurityPolicy_Basic256 1
+    #define OPCUA_SecurityPolicy_Basic256Sha256 2
+    #define OPCUA_SecurityPolicy_Aes128Sha256Rsa0aep 3
+
+#pragma pack(push, 1)
+typedef struct OPCUA_RemoteServerDescription 
+  {
+    CHAR *Id;
+    CHAR *Url;  //! <Type Comment="DEPRECATED: Do not use the URL anymore. The only relevant information is the Endpoint defined in this type." Name="OPCUA_RemoteServerDescription.Url"/>
+    CHAR *Endpoint;
+    OPCUA_MessageSecurityMode_Enum MessageSecurityMode;
+    OPCUA_SecurityPolicy_Enum SecurityPolicy;
+    CHAR *User;
+    CHAR *Password;
+    UDINT ConnectionHandle;
+  } OPCUA_RemoteServerDescription;
+#pragma pack(pop)
+
+#pragma pack(push, 1)
+typedef struct OPCUA_StandardAlarm 
+  {
+    OPCUA_TimeStamp TimeOn;
+    OPCUA_TimeStamp TimeOff;
+    DINT Number;
+    DINT Active;
+    DINT Acknowledged;
+    DINT Typ;
+    REAL Para1;
+    REAL Para2;
+    REAL Para3;
+    CHAR *Description;
+  } OPCUA_StandardAlarm;
+#pragma pack(pop)
+
 typedef HwBase *pHwBase;
 
 typedef HwBaseCDIAS *pHwBaseCDIAS;
+
+typedef OPCUA_Alarm *ptrOPCUA_Alarm;
+
+typedef OPCUA_AlarmUC *ptrOPCUA_AlarmUC;
+
+typedef OPCUA_ClientDiagnosticInfo *ptrOPCUA_ClientDiagnosticInfo;
+
+typedef OPCUA_NodeId *ptrOPCUA_NodeId;
+
+typedef OPCUA_NodeInfo *ptrOPCUA_NodeInfo;
+
+typedef OPCUA_RemoteServerDescription *ptrOPCUA_RemoteServerDescription;
+
+typedef OPCUA_StandardAlarm *ptrOPCUA_StandardAlarm;
 
 typedef UDINT SafetyConfigStateType; 
     #define _ModuleNotFound 0

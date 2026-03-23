@@ -42,6 +42,7 @@ TYPE
     HardwareCodeControlBoard : HINT;  //! <Type Comment="Hardware Code of the Control Board (Default: 16#0000)" Name="_I_HC_Type.HardwareCodeControlBoard"/>
   END_STRUCT;
 #pragma pack(pop)
+  _PVOIDL : ^USINT;
   _SDDAXISSTATE : BDINT
   [
     1 NoHW,
@@ -101,6 +102,14 @@ TYPE
     15 ManufactureSpec2,
     16 ManufactureSpec3,
   ];
+  ENV_Status :
+  (
+    ENV_NoVariableName,
+    ENV_ValidValue,
+    ENV_NoInterface,
+    ENV_VariableNameNotFound,
+    ENV_NoValueString
+  )$UDINT;
   FeSetup : BDINT
   [
     1 Valid,  //! <Type Comment="must be 1 to Start FileEx work" Name="FeSetup.Valid"/>
@@ -127,8 +136,189 @@ TYPE
     uiChNo : UINT;
   END_STRUCT;
 #pragma pack(pop)
+#pragma pack(push, 1)
+  OPCUA_TimeStamp : STRUCT
+    valLow : UDINT;
+    valHigh : DINT;
+  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+  OPCUA_Alarm : STRUCT
+    TimeStamp : OPCUA_TimeStamp;
+    Cycle : UDINT;
+    Active : DINT;
+    Number : ^CHAR;
+    Description : ^CHAR;
+  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+  OPCUA_AlarmUC : STRUCT
+    TimeStamp : OPCUA_TimeStamp;
+    Cycle : UDINT;
+    Active : DINT;
+    Number : ^UINT;
+    Description : ^UINT;
+  END_STRUCT;
+#pragma pack(pop)
+  OPCUA_ArrayType_Enum :  //! <Type Comment="Defines if the data value represents a scalar value or an array." Name="OPCUA_ArrayType_Enum"/>
+  (
+    OpcUa_VariantArrayType_Scalar,  //! <Type Comment="The data value represents a scalar value." Name="OPCUA_ArrayType_Enum.OpcUa_VariantArrayType_Scalar"/>
+    OpcUa_VariantArrayType_Array,  //! <Type Comment="The data value represents an array." Name="OPCUA_ArrayType_Enum.OpcUa_VariantArrayType_Array"/>
+    OpcUa_VariantArrayType_Matrix  //! <Type Comment="The data value represents a matrix." Name="OPCUA_ArrayType_Enum.OpcUa_VariantArrayType_Matrix"/>
+  )$INT;
+#pragma pack(push, 1)
+  OPCUA_Change : STRUCT
+    TimeStamp : OPCUA_TimeStamp;
+    Cycle : UDINT;
+    DatasetId : ^CHAR;
+    Dataset : ^CHAR;
+    ParameterId : ^CHAR;
+    UserId : ^CHAR;
+    User : ^CHAR;
+    Reason : ^CHAR;
+  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+  OPCUA_ChangeUC : STRUCT
+    TimeStamp : OPCUA_TimeStamp;
+    Cycle : UDINT;
+    DatasetId : ^CHAR;
+    Dataset : ^CHAR;
+    ParameterId : ^CHAR;
+    UserId : ^UINT;
+    User : ^UINT;
+    Reason : ^UINT;
+  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+  OPCUA_ClientDiagnosticInfo : STRUCT
+    ApplicationUri : ^CHAR;  //! <Type Comment="Client / session application uri." Name="OPCUA_ClientDiagnosticInfo.ApplicationUri"/>
+    ApplicationName : ^CHAR;  //! <Type Comment="Client / session application name." Name="OPCUA_ClientDiagnosticInfo.ApplicationName"/>
+    Start : OPCUA_TimeStamp;  //! <Type Comment="Timestamp when the client created the session." Name="OPCUA_ClientDiagnosticInfo.Start"/>
+    LastTransfer : OPCUA_TimeStamp;  //! <Type Comment="Timestamp when the client exchanged some data with the server (regardless which kind of information)" Name="OPCUA_ClientDiagnosticInfo.LastTransfer"/>
+    ItemsBrowsed : UDINT;  //! <Type Comment="Information about how much items have been browsed in the session." Name="OPCUA_ClientDiagnosticInfo.ItemsBrowsed"/>
+    ItemsRead : UDINT;  //! <Type Comment="Information about how much items have been read in the session." Name="OPCUA_ClientDiagnosticInfo.ItemsRead"/>
+    ItemsWritten : UDINT;  //! <Type Comment="Information about how much items have been written in the session." Name="OPCUA_ClientDiagnosticInfo.ItemsWritten"/>
+    NextDiagnosticInfo : ^void;  //! <Type Comment="Pointer to the next item in the list." Name="OPCUA_ClientDiagnosticInfo.NextDiagnosticInfo"/>
+  END_STRUCT;
+#pragma pack(pop)
+  OPCUA_DataTypeId :
+  (
+    Boolean:=1,
+    Int8:=2,
+    Int16:=4,
+    Int32:=6,
+    Int64:=8,
+    UInt8:=3,
+    UInt16:=5,
+    UInt32:=7,
+    UInt64:=9,
+    Float:=10,
+    Double:=11,
+    Text:=12,
+    OPC_DateTime:=13,
+    OPC_ByteString:=15,
+    OPC_LocalizedText:=21,
+    OPC_TimeZoneData:=8912,
+    OPC_NodeId:=17,
+    OPC_EnumValueType:=7594,
+    ExtensionObject:=22,
+    MemoryBoolean:=1000001,
+    MemoryInt8:=1000002,
+    MemoryInt16:=1000004,
+    MemoryInt32:=1000006,
+    MemoryUInt8:=1000003,
+    MemoryUInt16:=1000005,
+    MemoryUInt32:=1000007,
+    MemoryFloat:=1000010,
+    MemoryDouble:=1000011,
+    MemoryText:=1000012,
+    MemoryOPC_DateTime:=1000013,
+    MemoryOPC_ByteString:=1000015,
+    MemoryOPC_LocalizedText:=1000021,
+    MemoryOPC_TimeZoneData:=1008912,
+    MemoryOPC_NodeId:=1000017,
+    MemoryExtensionObject:=1000022,
+    ServerPointsToBoolean:=2000001,
+    ServerPointsToInt8:=2000002,
+    ServerPointsToInt16:=2000004,
+    ServerPointsToInt32,
+    ServerPointsToUInt8:=2000003,
+    ServerPointsToUInt16:=2000005,
+    ServerPointsToUInt32:=2000007,
+    ServerPointsToFloat:=2000010,
+    ServerPointsToDouble:=2000011,
+    ServerPointsToText:=2000012,
+    ServerPointsToOPC_DateTime:=2000013,
+    ServerPointsToOPC_ByteString:=2000015,
+    ServerPointsToOPC_LocalizedText:=2000021,
+    ServerPointsToOPC_TimeZoneData:=2008912,
+    ServerPointsToOPC_NodeId:=2000017,
+    ServerPointsToExtensionObject:=2000022
+  )$UDINT;
+  OPCUA_MessageSecurityMode_Enum :
+  (
+    OPCUA_SecurityMode_None:=1,
+    OPCUA_SecurityMode_Sign:=2,
+    OPCUA_SecurityMode_SignAndEncrypt:=3
+  )$UDINT;
+#pragma pack(push, 1)
+  OPCUA_NodeId : STRUCT  //! <Type Comment="Representing an OpcUa_NodeId in Lasal. There are only two types of identifier defined: numeric, and string identifier." Name="OPCUA_NodeId"/>
+    IdentifierType : UINT;  //! <Type Comment="The node id has one of the following types:&#13;&#10;&#13;&#10;0..Numeric identifier&#13;&#10;1..String identifier&#13;&#10;2..Numeric identifier" Name="OPCUA_NodeId.IdentifierType"/>
+    NamespaceIndex : UINT;  //! <Type Comment="Namespace of the node id." Name="OPCUA_NodeId.NamespaceIndex"/>
+    NumericIdentifier : UDINT;  //! <Type Comment="The numeric identifier." Name="OPCUA_NodeId.NumericIdentifier"/>
+    StringIdentifier : ^CHAR;  //! <Type Comment="The string identifier." Name="OPCUA_NodeId.StringIdentifier"/>
+  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+  OPCUA_NodeInfo : STRUCT
+    NodeId : OPCUA_NodeId;
+    DataTypeId : OPCUA_DataTypeId;
+    LasalId : UDINT;
+  END_STRUCT;
+#pragma pack(pop)
+  OPCUA_SecurityPolicy_Enum :
+  (
+    OPCUA_SecurityPolicy_None:=0,
+    OPCUA_SecurityPolicy_Basic256:=1,
+    OPCUA_SecurityPolicy_Basic256Sha256,  //! <Type Comment="This algorithm requires Salamander OS with a minimum version of 09.03.160" Name="OPCUA_SecurityPolicy_Enum.OPCUA_SecurityPolicy_Basic256Sha256"/>
+    OPCUA_SecurityPolicy_Aes128Sha256Rsa0aep  //! <Type Comment="This algorithm requires Salamander OS with a minimum version of 09.03.160" Name="OPCUA_SecurityPolicy_Enum.OPCUA_SecurityPolicy_Aes128Sha256Rsa0aep"/>
+  )$UDINT;
+#pragma pack(push, 1)
+  OPCUA_RemoteServerDescription : STRUCT
+    Id : ^CHAR;
+    Url : ^CHAR;  //! <Type Comment="DEPRECATED: Do not use the URL anymore. The only relevant information is the Endpoint defined in this type." Name="OPCUA_RemoteServerDescription.Url"/>
+    Endpoint : ^CHAR;
+    MessageSecurityMode : OPCUA_MessageSecurityMode_Enum;
+    SecurityPolicy : OPCUA_SecurityPolicy_Enum;
+    User : ^CHAR;
+    Password : ^CHAR;
+    ConnectionHandle : UDINT;
+  END_STRUCT;
+#pragma pack(pop)
+#pragma pack(push, 1)
+  OPCUA_StandardAlarm : STRUCT
+    TimeOn : OPCUA_TimeStamp;
+    TimeOff : OPCUA_TimeStamp;
+    Number : DINT;
+    Active : DINT;
+    Acknowledged : DINT;
+    Typ : DINT;
+    Para1 : REAL;
+    Para2 : REAL;
+    Para3 : REAL;
+    Description : ^CHAR;
+  END_STRUCT;
+#pragma pack(pop)
   pHwBase : ^HwBase;
   pHwBaseCDIAS : ^HwBaseCDIAS;
+  ptrOPCUA_Alarm : ^OPCUA_Alarm;
+  ptrOPCUA_AlarmUC : ^OPCUA_AlarmUC;
+  ptrOPCUA_ClientDiagnosticInfo : ^OPCUA_ClientDiagnosticInfo;
+  ptrOPCUA_NodeId : ^OPCUA_NodeId;
+  ptrOPCUA_NodeInfo : ^OPCUA_NodeInfo;
+  ptrOPCUA_RemoteServerDescription : ^OPCUA_RemoteServerDescription;
+  ptrOPCUA_StandardAlarm : ^OPCUA_StandardAlarm;
   SafetyConfigStateType :
   (
     _ModuleNotFound,

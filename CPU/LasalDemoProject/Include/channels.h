@@ -121,10 +121,20 @@ TYPE
     dData : DINT;
     pCmd : ^_SyncMeasureECAT;
   END_STRUCT;
+  CltChCmd__SysMsg : STRUCT
+    pCh : ^SvrChCmd_DINT;
+    dData : DINT;
+    pCmd : ^_SysMsg;
+  END_STRUCT;
   CltChCmd__TaskObjectControl : STRUCT
     pCh : ^SvrChCmd_DINT;
     dData : DINT;
     pCmd : ^_TaskObjectControl;
+  END_STRUCT;
+  CltChCmd__UserLogging : STRUCT
+    pCh : ^SvrChCmd_DINT;
+    dData : DINT;
+    pCmd : ^_UserLogging;
   END_STRUCT;
   CltChCmd__VaranDriveBase : STRUCT
     pCh : ^SvrChCmd_t_e_VaranErrors;
@@ -170,6 +180,26 @@ TYPE
     pCh : ^SvrChCmd_DINT;
     dData : DINT;
     pCmd : ^EEPROM;
+  END_STRUCT;
+  SvrChCmd_ENV_Status : STRUCT
+    pMeth : ^CMDMETH;
+    dData : ENV_Status;
+    pDsc : ^SVRDSC;
+  END_STRUCT;
+  CltChCmd_EnvironmentVariable : STRUCT
+    pCh : ^SvrChCmd_ENV_Status;
+    dData : ENV_Status;
+    pCmd : ^EnvironmentVariable;
+  END_STRUCT;
+  CltChCmd_ENVLib : STRUCT
+    pCh : ^SvrChCmd_DINT;
+    dData : DINT;
+    pCmd : ^ENVLib;
+  END_STRUCT;
+  CltChCmd_ENVStringAction : STRUCT
+    pCh : ^SvrChCmd_UDINT;
+    dData : UDINT;
+    pCmd : ^ENVStringAction;
   END_STRUCT;
   CltChCmd_EtherCAT_Hub_Base : STRUCT
     pCh : ^SvrChCmd_DINT;
@@ -220,6 +250,16 @@ TYPE
     pCh : ^SvrChCmd_UDINT;
     dData : UDINT;
     pCmd : ^MerkerEx;
+  END_STRUCT;
+  CltChCmd_OPC_UA : STRUCT
+    pCh : ^SvrChCmd_DINT;
+    dData : DINT;
+    pCmd : ^OPC_UA;
+  END_STRUCT;
+  CltChCmd_OPC_UA_Server : STRUCT
+    pCh : ^SvrChCmd_DINT;
+    dData : DINT;
+    pCmd : ^OPC_UA_Server;
   END_STRUCT;
   CltChCmd_RAMex : STRUCT
     pCh : ^SvrChCmd_UDINT;
@@ -349,6 +389,11 @@ TYPE
   SvrCh_SafetyConfigStateType : STRUCT
     pMeth : ^CHMETH;
     dData : SafetyConfigStateType;
+    pDsc : ^SVRDSC;
+  END_STRUCT;
+  SvrCh_T_BITS_PTofCls_OPC_UA : STRUCT
+    pMeth : ^CHMETH;
+    dData : OPC_UA::T_BITS;
     pDsc : ^SVRDSC;
   END_STRUCT;
   SvrCh_t_e_ECAT_STATE : STRUCT

@@ -168,12 +168,26 @@ typedef struct CltChCmd__SyncMeasureECAT
     _SyncMeasureECAT *pCmd;
   } CltChCmd__SyncMeasureECAT;
 
+typedef struct CltChCmd__SysMsg 
+  {
+    struct SvrChCmd_DINT *pCh;
+    DINT dData;
+    _SysMsg *pCmd;
+  } CltChCmd__SysMsg;
+
 typedef struct CltChCmd__TaskObjectControl 
   {
     struct SvrChCmd_DINT *pCh;
     DINT dData;
     _TaskObjectControl *pCmd;
   } CltChCmd__TaskObjectControl;
+
+typedef struct CltChCmd__UserLogging 
+  {
+    struct SvrChCmd_DINT *pCh;
+    DINT dData;
+    _UserLogging *pCmd;
+  } CltChCmd__UserLogging;
 
 typedef struct CltChCmd__VaranDriveBase 
   {
@@ -237,6 +251,34 @@ typedef struct CltChCmd_EEPROM
     DINT dData;
     EEPROM *pCmd;
   } CltChCmd_EEPROM;
+
+typedef struct SvrChCmd_ENV_Status 
+  {
+    CMDMETH *pMeth;
+    ENV_Status dData;
+    SVRDSC *pDsc;
+  } SvrChCmd_ENV_Status;
+
+typedef struct CltChCmd_EnvironmentVariable 
+  {
+    struct SvrChCmd_ENV_Status *pCh;
+    ENV_Status dData;
+    EnvironmentVariable *pCmd;
+  } CltChCmd_EnvironmentVariable;
+
+typedef struct CltChCmd_ENVLib 
+  {
+    struct SvrChCmd_DINT *pCh;
+    DINT dData;
+    ENVLib *pCmd;
+  } CltChCmd_ENVLib;
+
+typedef struct CltChCmd_ENVStringAction 
+  {
+    struct SvrChCmd_UDINT *pCh;
+    UDINT dData;
+    ENVStringAction *pCmd;
+  } CltChCmd_ENVStringAction;
 
 typedef struct CltChCmd_EtherCAT_Hub_Base 
   {
@@ -307,6 +349,20 @@ typedef struct CltChCmd_MerkerEx
     UDINT dData;
     MerkerEx *pCmd;
   } CltChCmd_MerkerEx;
+
+typedef struct CltChCmd_OPC_UA 
+  {
+    struct SvrChCmd_DINT *pCh;
+    DINT dData;
+    OPC_UA *pCmd;
+  } CltChCmd_OPC_UA;
+
+typedef struct CltChCmd_OPC_UA_Server 
+  {
+    struct SvrChCmd_DINT *pCh;
+    DINT dData;
+    OPC_UA_Server *pCmd;
+  } CltChCmd_OPC_UA_Server;
 
 typedef struct CltChCmd_RAMex 
   {
@@ -489,6 +545,13 @@ typedef struct SvrCh_SafetyConfigStateType
     SafetyConfigStateType dData;
     SVRDSC *pDsc;
   } SvrCh_SafetyConfigStateType;
+
+typedef struct SvrCh_T_BITS_PTofCls_OPC_UA 
+  {
+    CHMETH *pMeth;
+    T_BITS dData;
+    SVRDSC *pDsc;
+  } SvrCh_T_BITS_PTofCls_OPC_UA;
 
 typedef struct SvrCh_t_e_ECAT_STATE 
   {
