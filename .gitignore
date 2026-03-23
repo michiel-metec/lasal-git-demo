@@ -42,5 +42,6 @@ Internal
 # opc related classes added automatically from lasal instance
 !**/Class/OPC_UA/**
 !**/Class/OPC_UA_Client/**
+!**/Class/OPC_UA_Server/**
 !**/Class/OPC_UA_ModuleBase/**
 !**/Class/OPC_UA_AddressSpace/**
