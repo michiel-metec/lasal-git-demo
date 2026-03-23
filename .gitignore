@@ -45,3 +45,4 @@ Internal
 !**/Class/OPC_UA_Server/**
 !**/Class/OPC_UA_ModuleBase/**
 !**/Class/OPC_UA_AddressSpace/**
+!**/Class/OPC_UA_OpenSSL_v1_1_1/**
